@@ -1,7 +1,5 @@
-import Server from "./models/server";
 import dotenv from 'dotenv';
+import Server from "./models/server";
 
-
-//Configuramos el puerto dotenv
 dotenv.config();
 const server = new Server();

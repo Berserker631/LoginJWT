@@ -1,8 +1,10 @@
 import express, { Application } from 'express';
 import routesProduct from '../routes/product'
 import routesUser from '../routes/user'
+import routesLogin from "../routes/login";
 import { Product } from './product';
 import { User } from './user';
+import cors from 'cors';
 
 class Server {
     private app: Application;
@@ -25,10 +27,12 @@ class Server {
     routes() {
         this.app.use('/api/products', routesProduct)
         this.app.use('/api/users', routesUser)
+        this.app.use('/api/', routesLogin)
     }
 
     midlewares() {
         this.app.use(express.json())
+        this.app.use(cors());
     }
 
     async dbConnect() {
@@ -36,7 +40,6 @@ class Server {
             await Product.sync();
             await User.sync();
         } catch (error) {
-            console.log('Unable to connect to database, [error]: ', error);
         }
     }
 }

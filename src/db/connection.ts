@@ -6,8 +6,9 @@ const sequelize = new Sequelize('jwt', 'sa', 'sa2023', {
     pool: {
         max: 10,
         min: 0,
-        idle: 10000
-    }
-})
+        idle: 1000
+    },
+    logging: false,
+});
 
 export default sequelize
