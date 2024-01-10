@@ -1,19 +1,17 @@
 import { Request, Response } from "express";
-import { Employee } from "../Models/employee";
 import sequelize from "../../db/connection";
 
 export const getEmployees = async (req: Request, res: Response) => {
-  // const listItems = await Employee.findAll();
   const { QueryTypes } = require("sequelize");
   const users = await sequelize.query(
     `
     SELECT 
- SUBSTRING(L.[location], -1, CHARINDEX(',', L.[location])) AS lat,
- SUBSTRING(L.[location], CHARINDEX(',', L.[location]) + 1, LEN(L.[location]) - CHARINDEX(',', L.[location])) AS lng,
- L.CodEmployee,
- L.Name
+    SUBSTRING(L.[location], -1, CHARINDEX(',', L.[location])) AS lat,
+    SUBSTRING(L.[location], CHARINDEX(',', L.[location]) + 1, LEN(L.[location]) - CHARINDEX(',', L.[location])) AS lng,
+    L.CodEmployee,
+    L.Name
 
-FROM (
+    FROM (
     SELECT 
      H.CodEmployee ,
      CONCAT(TRIM(E.FirstName), ' ', E.FirstLastName) AS [Name],

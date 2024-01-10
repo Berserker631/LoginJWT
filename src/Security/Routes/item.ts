@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { getMenuItems } from "../Controllers/menu-item";
+import { getMenuItems, updateMenuItems } from "../Controllers/menu-item";
 import validateToken from "../../Shared/Tools/validate-token";
 
-const router = Router();
+export const routesItem = Router();
 
-// router.get('/', validateToken, getMenuItems)
-router.get('/', getMenuItems)
+routesItem.get('/',  getMenuItems)
+routesItem.post('/updateMenu', updateMenuItems)
 
-export default router; 
+export default routesItem; 

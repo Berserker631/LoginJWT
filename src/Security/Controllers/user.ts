@@ -8,15 +8,15 @@ import nodemailer from "nodemailer";
 
 export const newUser = async (req: Request, res: Response) => {
   const secret = speakeasy.generateSecret(process.env.SECRET_KEY);
-  const { name, last, alias, userName, password } = req.body;
+  const { name, last, alias, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
-
+  let userName: string = `${name.charAt(0).toUpperCase()}.${last}`; 
+  
   const otpauth_url = speakeasy.otpauthURL({
     secret: secret.base32,
     encoding: "base32",
     label: "Hickory Industries",
   });
-
   const user = await User.findOne({ where: { userName } }); // Validar si el usuario ya existe
 
   if (user) {
@@ -55,7 +55,7 @@ export const loginUser = async (req: Request, res: Response) => {
   let secret: string;
 
   if (!user) {
-    return res.status(400).json({ //Validamos si el usuario existe en la Base de datos
+    return res.status(400).json({  //Validamos si el usuario existe en la Base de datos
       msg: `The user: ${userName} doesn't exist`,
     });
   } else {
@@ -64,7 +64,7 @@ export const loginUser = async (req: Request, res: Response) => {
   }
 
   const passwordValid = await bcrypt.compare(password, user.password);
-  if (!passwordValid) { //Validamos la contraseña
+  if (!passwordValid) {   //Validamos la contraseña
     return res.status(400).json({
       msg: "Password Incorrect",
     });

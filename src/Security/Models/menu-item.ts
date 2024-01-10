@@ -5,6 +5,7 @@ export const Item = sequelize.define('menu', {
     idMenu: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true
     },
     menu_idMenu: {
         type: DataTypes.INTEGER

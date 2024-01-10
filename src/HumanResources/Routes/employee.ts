@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { getEmployees } from "../Controllers/employee";
 
-const router = Router();
-router.get('/', getEmployees);
+export const routesEmployee = Router();
+routesEmployee.get('/', getEmployees);
 
-export default router;
+export default routesEmployee;

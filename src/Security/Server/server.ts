@@ -1,11 +1,11 @@
 import express, { Application } from 'express';
-import routesItem from "../Routes/item";
-import routesUser from '../Routes/user';
-import { Employee } from '../../HumanResources/Models/employee';
-import  routesEmployee  from '../../HumanResources/Routes/employee';
-import { Item } from '../Models/menu-item';
-import { User } from '../Models/user';
+import { Item, User } from '../../Security';
+import { Employee } from "../../HumanResources";
+import { routesEmployee } from "../../HumanResources";
+import { routesUser, routesItem } from "../../Security";
 import cors from 'cors';
+import routesAccess from '../../Administration/Routes/access';
+import bodyParser from "body-parser";
 
 class Server {
     private app: Application;
@@ -29,11 +29,13 @@ class Server {
         this.app.use('/api/users', routesUser)
         this.app.use('/api/menu', routesItem)
         this.app.use('/api/employee', routesEmployee)
+        this.app.use('/api/administration', routesAccess)
     }
 
     midlewares() {
-        this.app.use(express.json())
         this.app.use(cors());
+        this.app.use(bodyParser.json());
+        this.app.use(express.json());
     }
 
     async dbConnect() {
